@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 //create your first component
@@ -23,36 +23,66 @@ const Home = () => {
 		setTarea(tareasFiltradas);
 	};
 
+	const createUser = async () => {
+		const response = await fetch("https://playground.4geeks.com/todo/users/user_gerardo", {
+			method: "POST",
+		})
+	}
 
-	return (
-		<div className="container">
-			<h1>to-do list*</h1>
-			<label className="form-label label-tarea text-center w-100" htmlFor="task">Escribe una tarea</label>
-			<input
-				className="form-control w-50 mx-auto p-3 rounded-0"
-				type="text"
-				id="task"
-				name="task"
-				value={inputValue}
-				onChange={onInputChange}
-				onKeyUp={handleKeyUp}
-			/>
+	
 
-			<ul className="list-group w-50 mx-auto rounded-0">
-				{tarea.length === 0 ? (
-					<li className="list-group-item text-center">
-						No hay tareas pendientes, añadir una...
-					</li>
-				) : (tarea.map((tarea, index) => (
-					<li key={index} className="list-group-item tarea-item text-center">
-						{tarea}
-						<button className="btn btn-sm btn-borrar" onClick={() => borrarTarea(index)}> X </button>
-					</li>
-				)))}
-			</ul>
+	const getTarea = async () => {
+		const response = await fetch("https://playground.4geeks.com/todo/users/user_gerardo")
+		if(!response.ok) {
+			console.log("crear usuario!");
+			createUser()
+		}
+		console.log(response);
+		const data = await response.json()
+		// console.log(data.todos);
+		setTarea(data)
+	}
 
-		</div>
-	);
+	useEffect(()=>{
+		console.log("Hola mundo");
+		
+	},[tarea])
+	
+
+
+
+
+
+
+return (
+	<div className="container">
+		<h1>to-do list*</h1>
+		<label className="form-label label-tarea text-center w-100" htmlFor="task">Escribe una tarea</label>
+		<input
+			className="form-control w-50 mx-auto p-3 rounded-0"
+			type="text"
+			id="task"
+			name="task"
+			value={inputValue}
+			onChange={onInputChange}
+			onKeyUp={handleKeyUp}
+		/>
+
+		<ul className="list-group w-50 mx-auto rounded-0">
+			{tarea.length === 0 ? (
+				<li className="list-group-item text-center">
+					No hay tareas pendientes, añadir una...
+				</li>
+			) : (tarea.map((tarea, index) => (
+				<li key={index} className="list-group-item tarea-item text-center">
+					{tarea}
+					<button className="btn btn-sm btn-borrar" onClick={() => borrarTarea(index)}> X </button>
+				</li>
+			)))}
+		</ul>
+
+	</div>
+);
 };
 
 export default Home;
