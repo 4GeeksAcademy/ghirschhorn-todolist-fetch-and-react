@@ -40,8 +40,8 @@ const Home = () => {
 
 			<ul className="list-group w-50 mx-auto rounded-0">
 				{tarea.length === 0 ? (
-					<li className="list-group-item text-center text-muted">
-						No hay tareas, añadir una...
+					<li className="list-group-item text-center">
+						No hay tareas pendientes, añadir una...
 					</li>
 				) : (tarea.map((tarea, index) => (
 					<li key={index} className="list-group-item tarea-item text-center">
